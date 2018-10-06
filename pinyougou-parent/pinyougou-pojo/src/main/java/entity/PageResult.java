@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * @author AqqJe
  *
  */
-public class PageResult {
+public class PageResult implements Serializable{
 
 	private Long totle; // 总记录数
 	private List row; // 当前页记录
