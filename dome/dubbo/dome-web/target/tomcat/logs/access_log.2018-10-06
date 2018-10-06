@@ -1,1 +1,4 @@
 0:0:0:0:0:0:0:1 - - [06/Oct/2018:12:20:17 +0800] "GET /user/showName.do HTTP/1.1" 200 5 http-bio-8082-exec-1 3209
+0:0:0:0:0:0:0:1 - - [06/Oct/2018:20:12:29 +0800] "GET /dome-8.html HTTP/1.1" 200 919 http-bio-8082-exec-1 64
+0:0:0:0:0:0:0:1 - - [06/Oct/2018:20:12:29 +0800] "GET /js/angular.min.js HTTP/1.1" 200 129177 http-bio-8082-exec-3 17
+0:0:0:0:0:0:0:1 - - [06/Oct/2018:20:12:29 +0800] "GET /data.json HTTP/1.1" 200 134 http-bio-8082-exec-4 2
