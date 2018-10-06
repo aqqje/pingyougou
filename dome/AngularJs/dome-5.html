@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>angularJs-dome-5 事件指令</title>
+	<!-- 引用angularJs -->
+	<script src="js/angular.min.js"></script>
+	<script>
+		// 建立模块
+		var app=angular.module("myApp", []);
+		// 创建控制器 $scop: 就是控制层与视图层之间的交换数据的桥梁
+		app.controller("myController", function($scope){
+			$scope.add=function(){
+				$scope.z=parseInt($scope.x)+parseInt($scope.y);
+			}
+		});
+	</script>
+</head>
+<!-- 指令 ng-app： 启动angularJs -->
+<body ng-app="myApp" ng-controller="myController">
+	第一个数：<input ng-model="x">&nbsp;第二个数：<input ng-model="y"><br/>
+	<button ng-click="add()">运算</button>
+	{{z}}
+</body>
+</html>

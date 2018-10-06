@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>angularJs-dome-6 循环对象数组</title>
+	<!-- 引用angularJs -->
+	<script src="js/angular.min.js"></script>
+	<script>
+		// 建立模块
+		var app=angular.module("myApp", []);
+		// 创建控制器 $scop: 就是控制层与视图层之间的交换数据的桥梁
+		app.controller("myController", function($scope){
+			$scope.list=[
+				{name:'aqqje', shuxue:100, yuwen:100},
+				{name:'liuli', shuxue:76, yuwen:80},
+				{name:'aqqgm', shuxue:45, yuwen:90}
+			];
+		});
+	</script>
+</head>
+<!-- 指令 ng-app： 启动angularJs -->
+<body ng-app="myApp" ng-controller="myController">
+	<table>
+		<tr>
+			<td>姓名</td>
+			<td>数学</td>
+			<td>语文</td>
+		</tr>
+		<tr ng-repeat="entity in list">
+			<td>{{entity.name}}</td>
+			<td>{{entity.shuxue}}</td>
+			<td>{{entity.yuwen}}</td>
+		</tr>
+	</table>
+</body>
+</html>
