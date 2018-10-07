@@ -99,4 +99,16 @@ public class BrandController {
 			return new Result(false, "删除失败");
 		}
 	}
+	
+	/**
+	 * 条件查询
+	 * @param brand
+	 * @param page
+	 * @param rows
+	 * @return PageResult(分页实体)
+	 */
+	@RequestMapping("/search")
+	public PageResult search(@RequestBody TbBrand brand, int page, int rows) {
+		return brandService.findPage(brand, page, rows);
+	}
 }
