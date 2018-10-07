@@ -16,6 +16,9 @@ public interface BrandService {
 	// 查询所有品牌
 	public List<TbBrand> findAll(); 
 	
-	// 分页
+	// 品牌分页
 	public PageResult findPage(int pageNum, int pageSize);
+	
+	// 品牌添加
+	public void add(TbBrand brand);
 }

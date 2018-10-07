@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分页实体类
+ * 分页实体封装
  * @author AqqJe
  *
  */

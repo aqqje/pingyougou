@@ -32,4 +32,10 @@ public class BrandServiceImp implements BrandService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+	@Override
+	public void add(TbBrand brand) {
+		// 添加品牌
+		brandMapper.insert(brand);
+	}
+
 }
