@@ -31,41 +31,52 @@
     					$scope.list=response;
     				}
     			);
-    			//分页控件配置 
-    			$scope.paginationConf = {
-    					 currentPage: 1,
-    					 totalItems: 10,
-    					 itemsPerPage: 10,
-    					 pagesLength: 15,
-    					 perPageOptions: [10, 20, 30, 40, 50],
-    					 onChange: function(){
-    					        	 $scope.reloadList();//重新加载
-    					 }
-    			}; 
-
-				
-    			//重新加载列表 数据
-    			$scope.reloadList=function(){
-    				 //切换页码  
-    				$scope.findPage( $scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-    			}
-
-				
-    			//分页
-    			$scope.findPage=function(page,rows){	
-    				$http.get('../brand/findPage.do?page='+page+'&rows='+rows).success(
-    						function(response){
-    							$scope.list=response.rows;	
-    							$scope.paginationConf.totalItems=response.total;//更新总记录数
-    						}			
-    				);
-    			}
+    		}
+    		// 获取分页数据
+    		$scope.findPage=function(page, rows){
+    			$http.get("../brand/findPage.do?page="+page+"&rows="+rows).success(
+    				function(response){
+    					$scope.list=response.rows; // 每页数据实体
+    					$scope.paginationConf.totalItems=response.totle;// 更新数据总记录数
+    				}		
+    			);
+    		}
+    		// 刷新数据列表 
+    		$scope.reloadList=function(){
+    			//切换页码
+    			$scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+    		}
+    		
+    		// 分页配置
+    		$scope.paginationConf={
+   					currentPage: 1,
+   				 	totalItems: 10,
+   				 	itemsPerPage: 10,
+   				 	perPageOptions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+   				 	onChange: function(){
+   				 		$scope.reloadList();
+   				}
+    		};
+    		
+    		// 添加
+    		$scope.add=function(){
+    			// 发送add请求
+    			$http.post("../brand/add.do", $scope.entity).success(
+    				function(response){
+    					if(response.success){// 成功
+    						$scope.reloadList(); // 刷新品牌列表
+    					}else{// 失败
+    						alert(response.message);
+    					}
+    				}		
+    			);
+    			// 获取信息并判断是否成功
     		}
     	});
     </script>
     
 </head>
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="brandController">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="brandController" >
   <!-- .box-body -->
                     <div class="box-header with-border">
                         <h3 class="box-title">品牌管理</h3>
@@ -119,8 +130,9 @@
 			                      </tbody>
 			                  </table>
 			                  <!--数据列表/-->                        
+							  <!-- 分页 -->
 							  <tm-pagination conf="paginationConf"></tm-pagination>
-							  
+							  <!-- 分页/ -->
 							 
                         </div>
                         <!-- 数据表格 /-->
@@ -143,11 +155,11 @@
 			<table class="table table-bordered table-striped"  width="800px">
 		      	<tr>
 		      		<td>品牌名称</td>
-		      		<td><input  class="form-control" placeholder="品牌名称" >  </td>
+		      		<td><input  class="form-control" placeholder="品牌名称" ng-model="entity.name">  </td>
 		      	</tr>		      	
 		      	<tr>
 		      		<td>首字母</td>
-		      		<td><input  class="form-control" placeholder="首字母">  </td>
+		      		<td><input  class="form-control" placeholder="首字母" ng-model="entity.firstChar">  </td>
 		      	</tr>		      	
 			 </table>				
 		</div>

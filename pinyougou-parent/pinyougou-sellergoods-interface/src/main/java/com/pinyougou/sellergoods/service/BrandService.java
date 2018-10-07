@@ -21,4 +21,10 @@ public interface BrandService {
 	
 	// 品牌添加
 	public void add(TbBrand brand);
+	
+	// 品牌修改
+	public void update(TbBrand brand);
+	
+	// 根据ID获取实体
+	public TbBrand findOne(Long id);
 }
