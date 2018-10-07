@@ -11,11 +11,11 @@ import java.util.List;
 public class PageResult implements Serializable{
 
 	private Long totle; // 总记录数
-	private List row; // 当前页记录
-	public PageResult(Long totle, List row) {
+	private List rows; // 当前页记录
+	public PageResult(Long totle, List rows) {
 		super();
 		this.totle = totle;
-		this.row = row;
+		this.rows = rows;
 	}
 	public Long getTotle() {
 		return totle;
@@ -23,11 +23,11 @@ public class PageResult implements Serializable{
 	public void setTotle(Long totle) {
 		this.totle = totle;
 	}
-	public List getRow() {
-		return row;
+	public List getRows() {
+		return rows;
 	}
-	public void setRow(List row) {
-		this.row = row;
+	public void setRows(List rows) {
+		this.rows = rows;
 	}
 	
 }
