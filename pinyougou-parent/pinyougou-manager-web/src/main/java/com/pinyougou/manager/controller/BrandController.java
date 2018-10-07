@@ -86,8 +86,12 @@ public class BrandController {
 	 * @param ids(id集合)
 	 * @return Result(返回结果实体)
 	 */
+	@RequestMapping("/delete")
 	public Result delete(Long[] ids) {
 		try {
+			if(ids == null) {
+				return new Result(false, "删除失败");
+			}
 			brandService.delete(ids);
 			return new Result(true, "删除成功");
 		} catch (Exception e) {
