@@ -46,7 +46,17 @@ public class BrandServiceImp implements BrandService {
 
 	@Override
 	public TbBrand findOne(Long id) {
+		// 根据ID查询
 		return brandMapper.selectByPrimaryKey(id);
 	}
+
+	@Override
+	public void delete(Long[] ids) {
+		// 批量删除
+		for(Long id: ids) {
+			brandMapper.deleteByPrimaryKey(id);
+		}
+	}
+	
 
 }

@@ -27,4 +27,7 @@ public interface BrandService {
 	
 	// 根据ID获取实体
 	public TbBrand findOne(Long id);
+	
+	// 批量删除
+	public void delete(Long[] ids);
 }
