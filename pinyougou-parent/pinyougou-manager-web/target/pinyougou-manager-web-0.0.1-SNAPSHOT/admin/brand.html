@@ -44,7 +44,7 @@
     		// 刷新数据列表 
     		$scope.reloadList=function(){
     			//切换页码
-    			$scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+    			$scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
     		}
     		
     		// 分页配置
@@ -89,7 +89,7 @@
     		// 复选框选中ID的集合
     		$scope.selectIds=[];
     		// 更新复选框
-    		$scope.updateSelectint=function($event, id){
+    		$scope.updateSelectiont=function($event, id){
     			if($event.target.checked){// 如果被选中<-->添加到selectIds集合中
     				$scope.selectIds.push(id);
     				console.log($scope.selectIds);
@@ -112,6 +112,17 @@
     					}
     				}
     			);
+    		}
+    		
+    		// 条件查询对象
+    		$scope.searchEntity={};
+    		$scope.search=function(page, rows){
+    			$http.post("../brand/search.do?page="+page+"&rows="+rows, $scope.searchEntity).success(
+        				function(response){
+        					$scope.list=response.rows; // 每页数据实体
+        					$scope.paginationConf.totalItems=response.totle;// 更新数据总记录数
+        				}		
+        			);
     		}
     	});
     </script>
@@ -140,7 +151,8 @@
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-							                                         
+                                	品牌名称：<input ng-model="searchEntity.name">品牌首字母：<input ng-model="searchEntity.firstChar">
+                                	<button class="btn btn-default" type="button" class="btn btn-default" ng-click="reloadList()"></button>                                   
                                 </div>
                             </div>
                             <!--工具栏/-->
@@ -150,7 +162,7 @@
 			                      <thead>
 			                          <tr>
 			                              <th class="" style="padding-right:0px">
-			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue" ng-click="updateSelectint($event.entity.id)">
+			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
 			                              </th> 
 										  <th class="sorting_asc">品牌ID</th>
 									      <th class="sorting">品牌名称</th>									      
@@ -160,7 +172,7 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox" ></td>			                              
+			                              <td><input  type="checkbox" ng-click="updateSelectiont($event, entity.id)"></td>			                              
 				                          <td>{{entity.id}}</td>
 									      <td>{{entity.name}}</td>									     
 		                                  <td>{{entity.firestChar}}</td>		                                 
