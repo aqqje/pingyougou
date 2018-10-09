@@ -1,5 +1,8 @@
 // 品牌控制层（brandController）
-app.controller("brandController", function($scope,brandService){
+app.controller("brandController", function($scope,$controller,brandService){
+	
+	$controller("baseController",{$scope:$scope});
+	
 	// 获取品牌列表数据
 	$scope.findAll=function(){
 		brandService.findAll().success(
@@ -17,22 +20,7 @@ app.controller("brandController", function($scope,brandService){
 			}		
 		);
 	}
-	// 刷新数据列表 
-	$scope.reloadList=function(){
-		//切换页码
-		$scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-	}
-	
-	// 分页配置
-	$scope.paginationConf={
-			currentPage: 1,
-		 	totalItems: 10,
-		 	itemsPerPage: 10,
-		 	perPageOptions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-		 	onChange: function(){
-		 		$scope.reloadList();
-		}
-	};
+
 	
 	// 保存（新增与修改）
 	$scope.save=function(){
@@ -64,19 +52,6 @@ app.controller("brandController", function($scope,brandService){
 			}		
 		);
 	}
-	// 复选框选中ID的集合
-	$scope.selectIds=[];
-	// 更新复选框
-	$scope.updateSelectiont=function($event, id){
-		if($event.target.checked){// 如果被选中<-->添加到selectIds集合中
-			$scope.selectIds.push(id);
-			console.log($scope.selectIds);
-		}else{
-			var idx=$scope.selectIds.indexOf(id);
-			$scope.selectIds.splice(idx, 1);// 删除
-		}
-	}
-	
 	// 批量删除品牌
 	$scope.dele=function(){
 		if($scope.selectIds == false){
