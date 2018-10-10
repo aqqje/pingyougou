@@ -16,7 +16,7 @@ app.controller("brandController", function($scope,$controller,brandService){
 		brandService.findPage(page, rows).success(
 			function(response){
 				$scope.list=response.rows; // 每页数据实体
-				$scope.paginationConf.totalItems=response.totle;// 更新数据总记录数
+				$scope.paginationConf.totalItems=response.total;// 更新数据总记录数
 			}		
 		);
 	}

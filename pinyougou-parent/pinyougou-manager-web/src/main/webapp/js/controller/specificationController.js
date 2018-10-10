@@ -1,5 +1,5 @@
  //控制层 
-app.controller('specificationController' ,function($scope,$controller   ,specificationService){	
+app.controller('specificationController' ,function($scope,$controller,specificationService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -69,6 +69,7 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
 	
 	//搜索
 	$scope.search=function(page,rows){			
+		$scope.selectIds=[];
 		specificationService.search(page,rows,$scope.searchEntity).success(
 			function(response){
 				$scope.list=response.rows;	

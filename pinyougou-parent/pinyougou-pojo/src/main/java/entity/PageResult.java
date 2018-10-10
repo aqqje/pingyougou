@@ -10,18 +10,18 @@ import java.util.List;
  */
 public class PageResult implements Serializable{
 
-	private Long totle; // 总记录数
+	private Long total; // 总记录数
 	private List rows; // 当前页记录
-	public PageResult(Long totle, List rows) {
+	public PageResult(Long total, List rows) {
 		super();
-		this.totle = totle;
+		this.total = total;
 		this.rows = rows;
 	}
-	public Long getTotle() {
-		return totle;
+	public Long getTotal() {
+		return total;
 	}
-	public void setTotle(Long totle) {
-		this.totle = totle;
+	public void setTotal(Long total) {
+		this.total = total;
 	}
 	public List getRows() {
 		return rows;

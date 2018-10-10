@@ -1,6 +1,5 @@
 app.controller("baseController",function($scope){
 	
-	
 	// 分页配置
 	$scope.paginationConf={
 			currentPage: 1,
