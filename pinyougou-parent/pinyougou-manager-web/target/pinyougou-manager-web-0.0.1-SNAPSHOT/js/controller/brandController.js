@@ -1,7 +1,8 @@
 // 品牌控制层（brandController）
-app.controller("brandController", function($scope, $controller){
+app.controller("brandController", function($scope,$controller,brandService){
 	
-	$controller("baseController", {$scope:$scope})
+	$controller("baseController",{$scope:$scope});
+	
 	// 获取品牌列表数据
 	$scope.findAll=function(){
 		brandService.findAll().success(
@@ -19,6 +20,7 @@ app.controller("brandController", function($scope, $controller){
 			}		
 		);
 	}
+
 	
 	// 保存（新增与修改）
 	$scope.save=function(){
@@ -50,7 +52,6 @@ app.controller("brandController", function($scope, $controller){
 			}		
 		);
 	}
-	
 	// 批量删除品牌
 	$scope.dele=function(){
 		if($scope.selectIds == false){
