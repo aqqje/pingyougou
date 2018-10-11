@@ -54,7 +54,6 @@ app.controller("brandController", function($scope,$controller,brandService){
 	}
 	// 批量删除品牌
 	$scope.dele=function(){
-		alert("ssss")
 		if($scope.selectIds == false){
 			alert("您还没选择呢！");
 			return false;

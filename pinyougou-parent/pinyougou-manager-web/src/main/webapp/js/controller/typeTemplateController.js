@@ -26,7 +26,11 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
 	$scope.findOne=function(id){				
 		typeTemplateService.findOne(id).success(
 			function(response){
-				$scope.entity= response;					
+				$scope.entity= response;	
+				//字符串转为JSON数据
+				$scope.entity.specIds= JSON.parse($scope.entity.specIds);
+				$scope.entity.brandIds= JSON.parse($scope.entity.brandIds);
+				$scope.entity.customAttributeItems= JSON.parse($scope.entity.customAttributeItems);
 			}
 		);				
 	}
@@ -53,16 +57,25 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
 	
 	 
 	//批量删除 
-	$scope.dele=function(){			
-		//获取选中的复选框			
-		typeTemplateService.dele( $scope.selectIds ).success(
-			function(response){
-				if(response.success){
-					$scope.reloadList();//刷新列表
-					$scope.selectIds=[];
-				}						
-			}		
-		);				
+	$scope.dele=function(){				
+		if($scope.selectIds == false){
+			alert("您还没选择呢！");
+			return false;
+		}
+		if(confirm("确认要删除？")){
+			typeTemplateService.dele($scope.selectIds).success(
+				function(response){
+					if(response.success){// 成功
+						// 更新数据列表
+						$scope.reloadList();
+						$scope.selectIds=[];
+						alert(response.message);
+					}else{//失败
+						alert(response.message);
+					}
+				}
+			);
+		}
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
@@ -117,5 +130,17 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
     //删除扩展属性列表
     $scope.deleTableRow=function(index){
     	$scope.entity.customAttributeItems.splice(index,1);
+    }
+    //JSON转字符串
+    $scope.jsonToString=function(jsonString, key){
+    	var json=JSON.parse(jsonString);
+    	var value="";
+    	for(var i=0; i<json.length; i++){
+    		if(i>0){
+    			value+=", ";
+    		}
+    		value+=json[i][key];
+    	}
+    	return value;
     }
 });	
