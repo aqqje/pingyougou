@@ -30,13 +30,14 @@
     <script src="../js/base_pagination.js"></script>
     <script src="../js/angular-select2.js"></script>
     <script src="../js/service/brandService.js"></script>
+    <script src="../js/service/specificationController.js"></script>
     <script src="../js/service/typeTemplateService.js"></script>
     <script src="../js/controller/typeTemplateController.js"></script>
     <script src="../js/controller/baseController.js"></script>
 
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="typeTemplateController" ng-init="findOptionList()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="typeTemplateController" ng-init="findBrandOptionList()">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -130,13 +131,13 @@
 		      	<tr>
 		      		<td>关联品牌</td>
 		      		<td>
-		      			<input select2 ng-model="entity.brandIds" multiple config="brandList" class="form-control" type="text">
+		      			<input select2 select2-model="entity.brandIds" multiple config="brandList" class="form-control" type="text">
 		      		</td>
 		      	</tr>
 		      	<tr>
 		      		<td>关联规格</td>
 		      		<td>
-	
+		      			<input select2 select2-model="entity.specIds" multiple config="specificationList" class="form-control" type="text">
 		      		</td>
 		      	</tr>	
 		      	
