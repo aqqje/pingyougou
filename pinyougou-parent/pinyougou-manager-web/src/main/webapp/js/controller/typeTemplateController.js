@@ -106,5 +106,16 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
     $scope.optionInit=function(){
     	$scope.entity.brandIds=[];
     	$scope.entity.specIds=[];
+    	$scope.entity={customAttributeItems:[]};
+    }
+    
+    //添加扩展属性列
+    $scope.entity={customAttributeItems:[]};
+    $scope.addTableRow=function(){
+    	$scope.entity.customAttributeItems.push({});
+    }
+    //删除扩展属性列表
+    $scope.deleTableRow=function(index){
+    	$scope.entity.customAttributeItems.splice(index,1);
     }
 });	
