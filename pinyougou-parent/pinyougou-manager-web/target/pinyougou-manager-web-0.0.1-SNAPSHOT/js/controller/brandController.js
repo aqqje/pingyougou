@@ -54,6 +54,7 @@ app.controller("brandController", function($scope,$controller,brandService){
 	}
 	// 批量删除品牌
 	$scope.dele=function(){
+		alert("ssss")
 		if($scope.selectIds == false){
 			alert("您还没选择呢！");
 			return false;
@@ -64,6 +65,7 @@ app.controller("brandController", function($scope,$controller,brandService){
 					if(response.success){// 成功
 						// 更新数据列表
 						$scope.reloadList();
+						$scope.selectIds=[];
 						alert(response.message);
 					}else{//失败
 						alert(response.message);
@@ -79,7 +81,7 @@ app.controller("brandController", function($scope,$controller,brandService){
 		brandService.search(page, rows, $scope.searchEntity).success(
 			function(response){
 				$scope.list=response.rows; // 每页数据实体
-				$scope.paginationConf.totalItems=response.totle;// 更新数据总记录数
+				$scope.paginationConf.totalItems=response.total;// 更新数据总记录数
 			}		
 		);
 	}
