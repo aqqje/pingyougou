@@ -30,13 +30,15 @@ app.controller('specificationController' ,function($scope,$controller,specificat
 			}
 		);				
 	}
-	
 	//保存 
 	$scope.save=function(){		
+		alert("save")
 		var serviceObject;//服务层对象  				
-		if($scope.enetity.specification.id!=null){//如果有ID
+		if($scope.entity.specification.id!=null){//如果有ID
+			alert("修改 ")
 			serviceObject=specificationService.update( $scope.entity ); //修改  
 		}else{
+			alert("增加 ")
 			serviceObject=specificationService.add( $scope.entity  );//增加 
 		}				
 		serviceObject.success(
@@ -53,16 +55,27 @@ app.controller('specificationController' ,function($scope,$controller,specificat
 	
 	 
 	//批量删除 
-	$scope.dele=function(){			
+	$scope.dele=function(){		
+		alert("批量删除 ")
 		//获取选中的复选框			
-		specificationService.dele( $scope.selectIds ).success(
-			function(response){
-				if(response.success){
-					$scope.reloadList();//刷新列表
-					$scope.selectIds=[];
-				}						
-			}		
-		);				
+		if($scope.selectIds == false){
+			alert("您还没选择呢！");
+			return false;
+		}
+		if(confirm("确认要删除？")){
+			specificationService.dele($scope.selectIds).success(
+				function(response){
+					if(response.success){// 成功
+						// 更新数据列表
+						$scope.reloadList();
+						$scope.selectIds=[];
+						alert(response.message);
+					}else{//失败
+						alert(response.message);
+					}
+				}
+			);
+		}
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
