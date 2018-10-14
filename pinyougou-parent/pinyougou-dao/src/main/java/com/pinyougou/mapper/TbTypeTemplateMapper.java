@@ -30,4 +30,5 @@ public interface TbTypeTemplateMapper {
 
     int updateByPrimaryKey(TbTypeTemplate record);
     
+    List<Map> selectTypeList();
 }

@@ -100,7 +100,7 @@ public class TypeTemplateController {
 		}
 	}
 	
-		/**
+	/**
 	 * 查询+分页
 	 * @param brand
 	 * @param page
@@ -110,5 +110,13 @@ public class TypeTemplateController {
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbTypeTemplate typeTemplate, int page, int rows  ){
 		return typeTemplateService.findPage(typeTemplate, page, rows);		
+	}
+	/**
+	 * 下拉列表选项
+	 * @return List<Map>
+	 */
+	@RequestMapping("/selectTypeList")
+	public List<Map> selectTypeList(){
+		return typeTemplateService.selectTypeList();
 	}
 }
