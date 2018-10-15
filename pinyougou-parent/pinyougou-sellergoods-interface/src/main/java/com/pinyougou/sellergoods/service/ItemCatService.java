@@ -3,6 +3,7 @@ import java.util.List;
 import com.pinyougou.pojo.TbItemCat;
 
 import entity.PageResult;
+import entity.Result;
 /**
  * 服务层接口
  * @author AqqJe
@@ -48,7 +49,7 @@ public interface ItemCatService {
 	 * 批量删除
 	 * @param ids
 	 */
-	public void delete(Long [] ids);
+	public Result delete(Long [] ids);
 
 	/**
 	 * 分页

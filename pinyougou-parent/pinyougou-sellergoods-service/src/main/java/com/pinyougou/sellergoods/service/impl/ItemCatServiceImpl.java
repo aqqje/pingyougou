@@ -11,6 +11,7 @@ import com.pinyougou.pojo.TbItemCatExample.Criteria;
 import com.pinyougou.sellergoods.service.ItemCatService;
 
 import entity.PageResult;
+import entity.Result;
 
 /**
  * 服务实现层
@@ -72,10 +73,24 @@ public class ItemCatServiceImpl implements ItemCatService {
 	 * 批量删除
 	 */
 	@Override
-	public void delete(Long[] ids) {
-		for(Long id:ids){
-			itemCatMapper.deleteByPrimaryKey(id);
-		}		
+	public Result delete(Long[] ids) {
+		List<TbItemCat> parent = null;
+		// 判断是否存在上级，存在不给予删除
+		for(Long id:ids) {
+			TbItemCatExample example = new TbItemCatExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andParentIdEqualTo(id);
+			parent = itemCatMapper.selectByExample(example);
+		}
+		if(parent == null) {
+			for(Long id:ids){
+				itemCatMapper.deleteByPrimaryKey(id);
+			}	
+			return new Result(true,"操作成功");
+		}else {
+			return new Result(false,"操作失败,此分级存在上级，不给予删除！");
+		}
+			
 	}
 	
 	
