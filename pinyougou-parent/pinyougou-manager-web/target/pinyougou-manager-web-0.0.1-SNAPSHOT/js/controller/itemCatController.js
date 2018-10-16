@@ -109,18 +109,18 @@ app.controller('itemCatController' ,function($scope,$controller,itemCatService,t
 		$scope.findByParentId(p_entity.id)//查询下级
 	}
 	
+	$scope.templateOptionList=[];
 	//模版下拉列表
-	$scope.templateOptionList={data:[]};
 	$scope.findTempOptionList=function(typeId){
 		typeTemplateService.selectTypeList().success(
 			function(response){
-				$scope.templateOptionList={data:response}
+				$scope.templateOptionList=response;
 			}
 		);
 	}
 	//页面初始化
 	$scope.pageInit=function(){
-		findTempOptionList();
-		findByParentId(0);
+		$scope.findTempOptionList();
+		$scope.findByParentId(0);
 	}
 });	

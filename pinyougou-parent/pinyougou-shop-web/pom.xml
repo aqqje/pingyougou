@@ -97,6 +97,12 @@
 		<artifactId>pinyougou-sellergoods-interface</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+
+	<dependency>
+		<groupId>com.pinyougou</groupId>
+		<artifactId>pinyougou-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>
 
   <build>  
@@ -109,7 +115,7 @@
 			<!-- 指定端口 -->
 			<port>9102</port>
 			<!-- 请求路径 -->
-			<path>/</path>
+			<path>/</path> 
 		</configuration>
 	  </plugin>
 	 </plugins>  

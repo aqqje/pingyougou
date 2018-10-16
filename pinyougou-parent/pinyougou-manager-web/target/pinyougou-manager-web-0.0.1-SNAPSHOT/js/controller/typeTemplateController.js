@@ -143,6 +143,4 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
     	}
     	return value;
     }
-    //下拉列表
-    $scope.typeTemplOptionList={data:[]}
 });	
