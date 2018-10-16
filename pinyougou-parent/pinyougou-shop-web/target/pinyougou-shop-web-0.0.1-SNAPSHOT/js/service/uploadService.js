@@ -7,7 +7,7 @@ app.service("uploadService", function($http){
 	    	method: 'POST',
 	    	url: '../upload.do',
 	    	data: formData,
-	    	headers: {'Content-Type': undefind},
+	    	headers: {'Content-Type':undefind},
 	    	transformRequest: angular.identity
 	    });
 	}

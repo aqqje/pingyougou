@@ -8,10 +8,15 @@ import org.springframework.web.multipart.MultipartFile;
 import entity.Result;
 import util.FastDFSClient;
 
+/**
+ * 文件上传
+ * @author AqqJe
+ *
+ */
 @RestController
 public class UploadController {
 
-	@Value("${{FILE_SERVER_URL }")
+	@Value("${FILE_SERVER_URL}")
 	private String FILE_SERVER_URL; // 文件服务器地址
 	
 	@RequestMapping("/upload")
