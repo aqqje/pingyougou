@@ -140,14 +140,19 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 		});
 	});
 	/**
-	 * 品牌下拉列表
+	 * 品牌,规格下拉列表
 	 */
 	$scope.$watch("entity.goods.typeTemplateId", function(newValue,oleValue){
+		//品牌列表
 		typeTemplateService.findOne(newValue).success(function(response){
 			$scope.typeTemplate.brandIds=response.brandIds;
 			$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);
 			//扩展属性
 			$scope.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);
+		});
+		//规格列表
+		typeTemplateService.findSpecList(newValue).success(function(response){
+			$scope.specList=response;
 		});
 	});
 	
