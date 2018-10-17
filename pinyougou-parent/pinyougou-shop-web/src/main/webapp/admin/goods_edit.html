@@ -29,12 +29,13 @@
     <script src="../js/base.js"></script>
     <script src="../js/service/goodsService.js"></script>
     <script src="../js/service/uploadService.js"></script>
+    <script src="../js/service/itemCatService.js"></script>
     <script src="../js/controller/goodsController.js"></script>
     <script src="../js/controller/baseController.js"></script>
     
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemcatList()">
 
             <!-- 正文区域 -->
             <section class="content">
@@ -73,17 +74,17 @@
 		                           	  	<table>
 		                           	  		<tr>
 		                           	  			<td>
-		                           	  				<select class="form-control" >														
+		                           	  				<select class="form-control" ng-model="entity.goods.category1Id" ng-options=" item.id as item.name for item in Itemcat1List">														
 		                           	  				</select>
 		                              			</td>
 		                              			<td>
-		                           	  				<select class="form-control select-sm" ></select>
+		                           	  				<select class="form-control select-sm" ng-model="entity.goods.category2Id" ng-options="item.id as item.name for item in Itemcat2List"></select>
 		                              			</td>
 		                              			<td>
-		                           	  				<select class="form-control select-sm" ></select>
+		                           	  				<select class="form-control select-sm" ng-model="entity.goods.category3Id" ng-options="item.id as item.name for item in Itemcat3List"></select>
 		                              			</td>
 		                              			<td>
-		                           	  				模板ID:19
+		                           	  				模板ID:{{entity.goods.typeTemplateId}}
 		                              			</td>
 		                           	  		</tr>
 		                           	  	</table>

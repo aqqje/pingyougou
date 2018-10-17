@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService){	
+app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService,itemCatService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -106,4 +106,37 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	$scope.remove_image_item=function(index){
 		$scope.entity.goodsDesc.itemImages.splice(index, 1);
 	}
+	
+	/**
+	 * 一级分类
+	 */
+	$scope.selectItemcatList=function(){
+		itemCatService.findByParentId(0).success(function(responses){
+			$scope.Itemcat1List=responses;
+		});
+	}
+	/**
+	 * 二级分类
+	 */
+	$scope.$watch("entity.goods.category1Id", function(newValue,oleValue){
+		itemCatService.findByParentId(oldVal).success(function(response){
+			$scope.Itemcat2List=response;
+		});
+	});
+	/**
+	 * 二级分类
+	 */
+	$scope.$watch("entity.goods.category2Id", function(newValue,oleValue){
+		itemCatService.findByParentId(oldVal).success(function(response){
+			$scope.Itemcat3List=response;
+		});
+	});
+	/**
+	 * 模版ID
+	 */
+	$scope.$watch("entity.goods.category3Id", function(newValue,oleValue){
+		itemCatService.findOne(newValue).success(function(response){
+			$scope.entity.goods.typeTemplateId=response.typeId;
+		});
+	});
 });	
