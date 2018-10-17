@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService,itemCatService){	
+app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService,itemCatService,typeTemplateService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -139,4 +139,16 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 			$scope.entity.goods.typeTemplateId=response.typeId;
 		});
 	});
+	/**
+	 * 品牌下拉列表
+	 */
+	$scope.$watch("entity.goods.typeTemplateId", function(newValue,oleValue){
+		typeTemplateService.findOne(newValue).success(function(response){
+			$scope.typeTemplate.brandIds=response.brandIds;
+			$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);
+			//扩展属性
+			$scope.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);
+		});
+	});
+	
 });	
