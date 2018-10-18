@@ -93,7 +93,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 		});
 	}
     
-	 $scope.entity={goods:{},goodsDesc:{itemImages:[],specificationItems:[]}};//定义页面实体结构
+	 $scope.entity={goodsDesc:{itemImages:[],specificationItems:[]}};//定义页面实体结构
 	/**
 	 * 添加图片列表
 	 */
@@ -177,15 +177,15 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	$scope.createItemList=function(){
 		$scope.entity.itemList=[{spec:{},price:0,num:99999,status:'0',isDefault:'0'}];//初始化
 		var items = $scope.entity.goodsDesc.specificationItems;
-		for(var i=0;i<list.length;i++){
-			addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue)
+		for(var i=0;i<items.length;i++){
+			$scope.entity.itemList=addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue)
 		}
 	}
 	addColumn=function(list,columnName,columnValues){
 		var newList=[];//新列
 		for(var i=0; i<list.length; i++){
 			var oldRow=list[i];
-			for(var j=0; j<columnValues; j++){
+			for(var j=0; j<columnValues.length; j++){
 				var newRow = JSON.parse( JSON.stringify( oldRow ) ); // 深克隆
 				newRow.spec[columnName]=columnValues[j];
 				newList.push(newRow);
