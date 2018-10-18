@@ -16,7 +16,7 @@ public class Goods implements Serializable {
 
 	private TbGoods goods;// 商品SPU
 	private TbGoodsDesc goodsDesc;// 商品扩展属性
-	private List<TbItem> item; // 商品集合
+	private List<TbItem> itemList; // 商品SUK
 	public TbGoods getGoods() {
 		return goods;
 	}
@@ -29,12 +29,12 @@ public class Goods implements Serializable {
 	public void setGoodsDesc(TbGoodsDesc goodsDesc) {
 		this.goodsDesc = goodsDesc;
 	}
-	public List<TbItem> getItem() {
-		return item;
+	public List<TbItem> getItemList() {
+		return itemList;
 	}
-	public void setItem(List<TbItem> item) {
-		this.item = item;
+	public void setItemList(List<TbItem> itemList) {
+		this.itemList = itemList;
 	}
-	
+
 	
 }

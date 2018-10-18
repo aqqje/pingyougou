@@ -29,5 +29,66 @@ app.controller("baseController",function($scope){
 			$scope.selectIds.splice(idx, 1);// 删除
 		}
 	}
-	//从集合中按照key查询对象
+	//JSON转字符串
+    $scope.jsonToString=function(jsonString, key){
+    	var json=JSON.parse(jsonString);
+    	var value="";
+    	for(var i=0; i<json.length; i++){
+    		if(i>0){
+    			value+=", ";
+    		}
+    		value+=json[i][key];
+    	}
+    	return value;
+    }
+	
+	//在list集合中根据某key的值查询对象
+//    $scope.searchObjectByKey=function(list,key,keyValue){
+//    	for(var i=0; i<list.length; i++){
+//    		if(list[i][key]==keyValue){
+//    			return list[i];
+//    		}
+//    	}
+//    	return null;
+//    }
+    
+    
+    
+    
+    
+    $scope.searchObjectByKey=function(list,key,keyValue){
+    	for(var i=0; i<list.length; i++){
+    		if(list[i][key]==keyValue){
+    			return list[i];
+    		}
+    	}
+    	return null;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 });
