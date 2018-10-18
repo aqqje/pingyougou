@@ -121,25 +121,25 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 		 * 商品录入规格信息:
 		 * 	[{"id":27,"text":"网络","options":{"2G","4G"}}]
 		 */
-		
+		@Autowired
 		private TbSpecificationOptionMapper specificationOptionMapper;
 		
 		@Override
 		public List<Map> findSpecList(Long id) {
-			//获取模版规格对象
-			TbTypeTemplate spec = typeTemplateMapper.selectByPrimaryKey(id);
-			//获取规格对象集合并转为JSON数据
-			List<Map> specList = JSON.parseArray(spec.getSpecIds(), Map.class);
-			for(Map map:specList) {
-				//获取规格对象对应的选项列表
-				TbSpecificationOptionExample example = new TbSpecificationOptionExample();
+			//查询模板
+			TbTypeTemplate typeTemplate = typeTemplateMapper.selectByPrimaryKey(id);
+			
+			List<Map> list = JSON.parseArray(typeTemplate.getSpecIds(), Map.class)  ;
+			for(Map map:list){
+				//查询规格选项列表
+				TbSpecificationOptionExample example=new TbSpecificationOptionExample();
 				com.pinyougou.pojo.TbSpecificationOptionExample.Criteria criteria = example.createCriteria();
-				criteria.andSpecIdEqualTo(new Long((Integer)map.get("id")));
+				criteria.andSpecIdEqualTo( new Long( (Integer)map.get("id") ) );
 				List<TbSpecificationOption> options = specificationOptionMapper.selectByExample(example);
-				//放入specList集合
 				map.put("options", options);
-			}
-			return specList;
+			}		
+			return list;
+
 		}
 
 }

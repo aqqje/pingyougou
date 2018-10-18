@@ -29,4 +29,5 @@ app.controller("baseController",function($scope){
 			$scope.selectIds.splice(idx, 1);// 删除
 		}
 	}
+	//从集合中按照key查询对象
 });

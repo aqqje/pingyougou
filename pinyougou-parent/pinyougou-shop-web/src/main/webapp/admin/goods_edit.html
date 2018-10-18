@@ -171,10 +171,10 @@
                             <!--扩展属性-->
                             <div class="tab-pane" id="customAttribute">
                                 <div class="row data-type">                                
-	                                <div ng-repeat="pojo in goodsDesc.customAttributeItems">
+	                                <div ng-repeat="pojo in entity.goodsDesc.customAttributeItems">
 		                                <div class="col-md-2 title">{{pojo.text}}</div>
 				                        <div class="col-md-10 data">
-				                              <input class="form-control" ng-model="pojo.value" placeholder="pojo.text">	            	 
+				                              <input class="form-control" ng-model="pojo.value" placeholder="{{pojo.text}}">	            	 
 				                        </div>
 	                                </div>       
                                 </div>
@@ -193,15 +193,14 @@
                             	<div>
                             	
 	                                <div class="row data-type">
-	                                [{"id":27,"text":"网络","options":{"2G","4G"}}]
+	                                
 		                                <div ng-repeat="pojo in specList">
-			                                <div class="col-md-2 title">{{pojo.text}}</div>
-					                        <div class="col-md-10 data">
-					                               
-					                            <span ng-repeat="option pojo.options">
-					                            	<input  type="checkbox" >{{option.optionName}}					                            				                            	
-					                            </span>  	
-					                        </div>
+											<div class="col-md-2 title">{{pojo.text}}</div>
+											<div class="col-md-10 data">
+											<span ng-repeat="option in pojo.options">
+												<input  type="checkbox" ng-click="updateSpecAttribute($event,pojo.text,option.optionName)">{{option.optionName}}					                            				                            	    
+											</span> 																         
+										</div>
 		                                </div>   
 	                                </div>
 	

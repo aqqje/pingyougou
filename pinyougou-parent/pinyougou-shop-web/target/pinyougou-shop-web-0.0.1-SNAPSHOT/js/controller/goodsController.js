@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService){	
+app.controller('goodsController' ,function($scope,$controller,goodsService,uploadService,itemCatService,typeTemplateService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -93,7 +93,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 		});
 	}
     
-	 $scope.entity={goods:{},goodsDesc:{itemImages:[]}};//定义页面实体结构
+	 $scope.entity={goods:{},goodsDesc:{itemImages:[]},specificationItems:[]};//定义页面实体结构
 	/**
 	 * 添加图片列表
 	 */
@@ -106,4 +106,54 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	$scope.remove_image_item=function(index){
 		$scope.entity.goodsDesc.itemImages.splice(index, 1);
 	}
+	
+	/**
+	 * 一级分类
+	 */
+	$scope.selectItemcatList=function(){
+		itemCatService.findByParentId(0).success(function(responses){
+			$scope.Itemcat1List=responses;
+		});
+	}
+	/**
+	 * 二级分类
+	 */
+	$scope.$watch("entity.goods.category1Id", function(newValue,oleValue){
+		itemCatService.findByParentId(newValue).success(function(response){
+			$scope.Itemcat2List=response;
+		});
+	});
+	/**
+	 * 二级分类
+	 */
+	$scope.$watch("entity.goods.category2Id", function(newValue,oleValue){
+		itemCatService.findByParentId(newValue).success(function(response){
+			$scope.Itemcat3List=response;
+		});
+	});
+	/**
+	 * 模版ID
+	 */
+	$scope.$watch("entity.goods.category3Id", function(newValue,oleValue){
+		itemCatService.findOne(newValue).success(function(response){
+			$scope.entity.goods.typeTemplateId=response.typeId;
+		});
+	});
+	/**
+	 * 品牌,规格下拉列表
+	 */
+	$scope.$watch("entity.goods.typeTemplateId", function(newValue,oleValue){
+		//品牌列表
+		typeTemplateService.findOne(newValue).success(function(response){
+			$scope.typeTemplate=response;
+			$scope.typeTemplate.brandIds=JSON.parse( $scope.typeTemplate.brandIds );
+			//扩展属性
+			$scope.entity.goodsDesc.customAttributeItems=JSON.parse( $scope.typeTemplate.customAttributeItems );
+		});
+		//规格列表
+		typeTemplateService.findSpecList(newValue).success(function(response){
+			$scope.specList=response;
+		});
+	});
+	
 });	
