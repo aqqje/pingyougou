@@ -16,10 +16,12 @@ import com.pinyougou.mapper.TbItemMapper;
 import com.pinyougou.mapper.TbSellerMapper;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbGoodsDesc;
 import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.pojo.TbItemExample;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
@@ -84,9 +86,12 @@ public class GoodsServiceImpl implements GoodsService {
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());
 		// 添加商品扩展信息
 		goodsDescMapper.insert(goods.getGoodsDesc());
-		List<TbItem> itemList = goods.getItemList();
+		saveItem(goods);
+	}
+	
+	private void saveItem(Goods goods) {
 		if("1".equals(goods.getGoods().getIsEnableSpec())) {//启用规格
-			for(TbItem item: itemList) {
+			for(TbItem item: goods.getItemList()) {
 				//标题
 				String title = goods.getGoods().getGoodsName();
 				Map<String,Object> specMap = JSON.parseObject(item.getSpec());
@@ -108,7 +113,6 @@ public class GoodsServiceImpl implements GoodsService {
 			itemMapper.insert(item);
 		}
 
-		
 	}
 
 	
@@ -144,8 +148,25 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
+	public void update(Goods goods){
+		//商品信息修改，需要重新设置状态
+		goods.getGoods().setAuditStatus("0");
+		
+		//保存商品SPU
+		goodsMapper.updateByPrimaryKey(goods.getGoods());
+		
+		//保存商品扩展信息
+		goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+		
+		//删除商品SUK
+		TbItemExample example = new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(goods.getGoods().getId());
+		itemMapper.deleteByExample(example);
+		
+		//保存商品SUK
+		saveItem(goods);
+		
 	}	
 	
 	/**
@@ -154,8 +175,22 @@ public class GoodsServiceImpl implements GoodsService {
 	 * @return
 	 */
 	@Override
-	public TbGoods findOne(Long id){
-		return goodsMapper.selectByPrimaryKey(id);
+	public Goods findOne(Long id){
+		Goods goods = new Goods();
+		//商品基本信息
+		TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+		goods.setGoods(tbGoods);
+		//商品扩展信息
+		TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+		goods.setGoodsDesc(tbGoodsDesc);
+		//查询SKU商品列表
+		TbItemExample example=new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(id);//查询条件：商品ID
+		List<TbItem> itemList = itemMapper.selectByExample(example);		
+		goods.setItemList(itemList);
+
+		return goods;
 	}
 
 	/**

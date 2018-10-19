@@ -16,17 +16,20 @@
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     
     
-     <!-- angularJs开始 -->
+    <!-- angularJs开始 -->
     <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
     <!-- angularJs结束 -->
-    
-    <!-- 分页组件开始 -->
+  	<!-- 分页组件开始 -->
     <script src="../plugins/angularjs/pagination.js"></script>
 	<link rel="stylesheet" href="../plugins/angularjs/pagination.css">
     <!-- 分页组件结束 -->
-    
+  
+    <script src="../plugins/adminLTE/js/app.min.js"></script>
     <script src="../js/base_pagination.js"></script>
     <script src="../js/service/goodsService.js"></script>
+    <script src="../js/service/uploadService.js"></script>
+    <script src="../js/service/itemCatService.js"></script>
+    <script src="../js/service/typeTemplateService.js"></script>
     <script src="../js/controller/goodsController.js"></script>
     <script src="../js/controller/baseController.js"></script>
  
@@ -56,6 +59,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{entity.list}}
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
                                                                                        状态：
@@ -107,7 +111,7 @@
 			                  </table>
 			                  <!--数据列表/-->                        
 							  <!-- 分页 -->
-							  <tm-pagination conf="paginationConf"></tm-pagination>
+							 <tm-pagination conf="paginationConf"></tm-pagination>
 							  <!-- 分页/ -->
                         </div>
                         <!-- 数据表格 /-->

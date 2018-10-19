@@ -21,7 +21,7 @@
 	<script charset="utf-8" src="../plugins/kindeditor/kindeditor-min.js"></script>
 	<script charset="utf-8" src="../plugins/kindeditor/lang/zh_CN.js"></script>
     
-         <!-- angularJs开始 -->
+    <!-- angularJs开始 -->
     <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
     <!-- angularJs结束 -->
   
@@ -36,7 +36,7 @@
     
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemcatList()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="selectItemcatList();findOne()">
 
             <!-- 正文区域 -->
             <section class="content">
@@ -196,10 +196,11 @@
 											<div class="col-md-2 title">{{pojo.text}}</div>
 											<div class="col-md-10 data">
 											<span ng-repeat="option in pojo.options">
-												<input  type="checkbox" ng-click="updateSpecAttribute($event,pojo.text,option.optionName);createItemList()">{{option.optionName}}					                            				                            	    
+												<input  type="checkbox" ng-click="updateSpecAttribute($event,pojo.text,option.optionName);createItemList()" ng-checked="checkAttributeValue(pojo.text,option.optionName)">{{option.optionName}}					                            				                            	    
 											</span> 																         
 										</div>
-		                                </div>  
+		                                </div>
+		                                {{entity.itemList}}
 	                                </div>
 	                                <div class="row data-type">
 	                                	 <table class="table table-bordered table-striped table-hover dataTable">
