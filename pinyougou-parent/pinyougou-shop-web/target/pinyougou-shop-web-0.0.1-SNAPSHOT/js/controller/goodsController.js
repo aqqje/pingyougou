@@ -35,7 +35,6 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	
 	//保存 
 	$scope.add=function(){			
-		alert("11111111")
 		$scope.entity.goodsDesc.introduction=editor.html();
 		goodsService.add($scope.entity).success(
 			function(response){
