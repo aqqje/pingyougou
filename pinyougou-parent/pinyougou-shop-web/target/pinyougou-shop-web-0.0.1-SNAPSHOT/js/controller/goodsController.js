@@ -110,8 +110,8 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 	 * 一级分类
 	 */
 	$scope.selectItemcatList=function(){
-		itemCatService.findByParentId(0).success(function(responses){
-			$scope.Itemcat1List=responses;
+		itemCatService.findByParentId(0).success(function(response){
+			$scope.Itemcat1List=response;
 		});
 	}
 	/**
@@ -191,5 +191,16 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,uploa
 			}
 		}
 		return newList;
+	}
+	//商品状态 0：未审核 ，1：已审核，2：审核未通过，3：关闭
+	$scope.status=['未审核','已审核','审核未通过','关闭'];
+	
+	$scope.itemCatList=[];//商品分类列表
+	$scope.findItemCatList=function(){
+		itemCatService.findAll().success(function(response){
+			for(var i=0; i<response.length; i++){
+				$scope.itemCatList[response[i].id]=response[i].name;
+			}
+		});
 	}
 });	
