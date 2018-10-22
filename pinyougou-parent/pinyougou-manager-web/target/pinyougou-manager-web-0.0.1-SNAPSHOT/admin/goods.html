@@ -49,16 +49,17 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
-                                        <button type="button" class="btn btn-default" title="审核通过" ><i class="fa fa-check"></i> 审核通过</button>
-                                        <button type="button" class="btn btn-default" title="驳回" ><i class="fa fa-ban"></i> 驳回</button>                                  
-                                        <button type="button" class="btn btn-default" title="刷新" ><i class="fa fa-refresh"></i> 刷新</button>
+                                        <button type="button" class="btn btn-default" title="审核通过" ng-click="updateStatus('1')"><i class="fa fa-check"></i> 审核通过</button>
+                                        <button type="button" class="btn btn-default" title="驳回" ng-click="updateStatus('2')"><i class="fa fa-ban"></i> 驳回</button>                                  
+                                        <button type="button" class="btn btn-default" title="刷新" ng-click="window.location.reload()"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                    商品名称：<input >
-									<button class="btn btn-default" >查询</button>                                    
+                                   	 商品名称：
+                                   	<input style="width: 100px" ng-model="searchEntity.goodsName">
+									<button class="btn btn-default" ng-click="reloadList()">查询</button>                                    
                                 </div>
                             </div>
                             <!--工具栏/-->
@@ -82,7 +83,7 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox"></td>			                              
+				                          <td><input  type="checkbox" ng-click="updateSelectiont($event, entity,id)"></td>			                              
 				                          <td>{{entity.id}}</td>
 									      <td>{{entity.goodsName}}</td>
 									      <td>{{entity.price}}</td>
@@ -99,7 +100,7 @@
 			                  <!--数据列表/-->     
 			                  <!-- 分页 -->
 							  <tm-pagination conf="paginationConf"></tm-pagination>
-							  <!-- 分页/ -->                   
+							  <!-- 分页/ -->        
                         </div>
                         <!-- 数据表格 /-->
                         

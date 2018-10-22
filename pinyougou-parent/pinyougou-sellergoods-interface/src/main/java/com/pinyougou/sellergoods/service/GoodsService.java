@@ -59,4 +59,10 @@ public interface GoodsService {
 	 */
 	public PageResult findPage(TbGoods goods, int pageNum,int pageSize);
 	
+	/**
+	 * 商品审核：商品状态 0：未审核 ，1：已审核，2：审核未通过，3：关闭
+	 * @param ids
+	 * @param status
+	 */
+	public void updateStatus(Long[] ids,String status);
 }

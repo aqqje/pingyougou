@@ -1,6 +1,7 @@
 package com.pinyougou.manager.controller;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -110,6 +111,18 @@ public class GoodsController {
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
 		return goodsService.findPage(goods, page, rows);		
+	}
+	
+	@RequestMapping("/updateStatus")
+	public Result updateStatus(Long[] ids, String status) {
+		try {
+			goodsService.updateStatus(ids, status);
+			return new Result(true, "操作成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "操作失败！");
+		}
+		
 	}
 	
 }

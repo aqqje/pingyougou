@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller   ,goodsService){	
+app.controller('goodsController' ,function($scope,$controller,goodsService,itemCatService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -89,4 +89,16 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 		});
 	}
     
+	$scope.updateStatus=function(status){
+		itemCatService.updateStatus($scope.selectIds,status).success(function(response){
+			if(response.success){
+				alert(response.message);
+				$scope.reloadList();//刷新列表
+				$scope.selectIds=[];//清空
+			}else{
+				alert(response.message);
+				$scope.selectIds=[];//清空
+			}
+		});
+	}
 });	
