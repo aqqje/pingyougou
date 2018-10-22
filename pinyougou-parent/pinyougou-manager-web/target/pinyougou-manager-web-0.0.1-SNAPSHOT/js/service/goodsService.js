@@ -30,7 +30,7 @@ app.service('goodsService',function($http){
 		return $http.post('../goods/search.do?page='+page+"&rows="+rows, searchEntity);
 	}    	
 	//批量审核
-	this.updateStatus=function(){
+	this.updateStatus=function(ids,status){
 		return $http.post('../goods/updateStatus.do?ids='+ids+'&status='+status);
 	}
 });

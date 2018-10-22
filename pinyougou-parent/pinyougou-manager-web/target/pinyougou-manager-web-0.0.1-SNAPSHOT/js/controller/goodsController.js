@@ -90,7 +90,7 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 	}
     
 	$scope.updateStatus=function(status){
-		itemCatService.updateStatus($scope.selectIds,status).success(function(response){
+		goodsService.updateStatus($scope.selectIds,status).success(function(response){
 			if(response.success){
 				alert(response.message);
 				$scope.reloadList();//刷新列表
