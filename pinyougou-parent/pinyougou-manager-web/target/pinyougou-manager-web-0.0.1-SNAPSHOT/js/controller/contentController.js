@@ -1,5 +1,5 @@
  //控制层 
-app.controller('contentController' ,function($scope,$controller   ,contentService){	
+app.controller('contentController' ,function($scope,$controller,contentService,uploadService,contentCategoryService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -51,18 +51,26 @@ app.controller('contentController' ,function($scope,$controller   ,contentServic
 		);				
 	}
 	
-	 
-	//批量删除 
-	$scope.dele=function(){			
-		//获取选中的复选框			
-		contentService.dele( $scope.selectIds ).success(
-			function(response){
-				if(response.success){
-					$scope.reloadList();//刷新列表
-					$scope.selectIds=[];
-				}						
-			}		
-		);				
+	//批量删除
+	$scope.dele=function(){
+		if($scope.selectIds == false){
+			alert("您还没选择呢！");
+			return false;
+		}
+		if(confirm("确认要删除？")){
+			contentService.dele($scope.selectIds).success(
+				function(response){
+					if(response.success){// 成功
+						// 更新数据列表
+						$scope.reloadList();
+						$scope.selectIds=[];
+						alert(response.message);
+					}else{//失败
+						alert(response.message);
+					}
+				}
+			);
+		}
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
@@ -76,5 +84,25 @@ app.controller('contentController' ,function($scope,$controller   ,contentServic
 			}			
 		);
 	}
+	
+	//图片上传
+	$scope.uploadFile=function(){
+		uploadService.uploadFile().success(function(response){
+			if(response.success){//如果上传成功获取image_url
+				$scope.entity.pic=response.message;
+			}else{
+				alert(response.message);
+			}
+		}).error(function(){
+			alert("上传发生错误");
+		});
+	}
     
+	$scope.findContentCategoryList=function(){
+		contentCategoryService.findAll().success(function(response){
+			$scope.contentCategoryList=response;
+		});
+	}
+	//广告状态
+	$scope.statusList=['无效','有效']
 });	

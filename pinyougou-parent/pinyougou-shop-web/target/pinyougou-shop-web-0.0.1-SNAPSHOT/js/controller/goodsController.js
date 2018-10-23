@@ -237,7 +237,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 	$scope.findItemCatList=function(){
 		itemCatService.findAll().success(function(response){
 			for(var i=0; i<response.length; i++){
-				$scope.itemCatList=response;
+				$scope.itemCatList[response[i].id]=response[i].name;
 			}
 		});
 	}

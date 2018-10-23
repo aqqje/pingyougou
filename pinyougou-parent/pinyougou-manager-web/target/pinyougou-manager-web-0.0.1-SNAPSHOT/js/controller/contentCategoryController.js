@@ -1,5 +1,5 @@
  //控制层 
-app.controller('contentCategoryController' ,function($scope,$controller   ,contentCategoryService){	
+app.controller('contentCategoryController' ,function($scope,$controller,contentCategoryService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -52,17 +52,26 @@ app.controller('contentCategoryController' ,function($scope,$controller   ,conte
 	}
 	
 	 
-	//批量删除 
-	$scope.dele=function(){			
-		//获取选中的复选框			
-		contentCategoryService.dele( $scope.selectIds ).success(
-			function(response){
-				if(response.success){
-					$scope.reloadList();//刷新列表
-					$scope.selectIds=[];
-				}						
-			}		
-		);				
+	//批量删除
+	$scope.dele=function(){
+		if($scope.selectIds == false){
+			alert("您还没选择呢！");
+			return false;
+		}
+		if(confirm("确认要删除？")){
+			contentCategoryService.dele($scope.selectIds).success(
+				function(response){
+					if(response.success){// 成功
+						// 更新数据列表
+						$scope.reloadList();
+						$scope.selectIds=[];
+						alert(response.message);
+					}else{//失败
+						alert(response.message);
+					}
+				}
+			);
+		}
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
