@@ -103,4 +103,6 @@ app.controller('contentController' ,function($scope,$controller,contentService,u
 			$scope.contentCategoryList=response;
 		});
 	}
+	//广告状态
+	$scope.statusList=['无效','有效']
 });	

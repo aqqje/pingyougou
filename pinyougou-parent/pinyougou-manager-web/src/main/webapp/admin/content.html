@@ -75,7 +75,7 @@
 			                              <td>{{entity.title}}</td>			
 			                              <td>{{entity.url}}</td>			
 			                              <td><img src="{{entity.pic}}" width="100px" height="50px"></td>			
-			                              <td>{{entity.status}}</td>			
+			                              <td>{{statusList[entity.status]}}</td>			
 			                              <td>{{entity.sortOrder}}</td>			
 		                                  <td class="text-center">                                           
 		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)">修改</button>                                           
@@ -118,14 +118,15 @@
                                    <div>
                                    	<input  type="file" id="file"><br/>
                                    	<button  ng-click="uploadFile()">上传</button>
-                                   	<img alt="" style="" src="{{entity.pic}}" heigth="100px" width="200px">
+                                   	<img alt=""  src="{{entity.pic}}" heigth="100px" width="200px">
                                    </div>
                                    <div style="clear: both;"></div>
                                    </td>
                                </tr>		
 		      	               <tr>
                                   <td>状态</td>
-                                  <td><input  class="form-control" ng-model="entity.status" placeholder="状态" ></td>
+                                  <td>
+                                  <input  type="checkbox" ng-model="entity.status" ng-true-value="1" ng-false-value="0"></td>
                                </tr>		
 		      	               <tr>
                                  <td>排序</td>
