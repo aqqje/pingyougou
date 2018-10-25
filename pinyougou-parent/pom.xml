@@ -229,12 +229,12 @@
 	  		<dependency>
 	  			<groupId>org.apache.httpcomponents</groupId>
 	  			<artifactId>httpcore</artifactId>
-	  			<version>4.4.4</version>
+	  			<version>4.4.10</version>
 	  		</dependency>  		
 	  		<dependency>
 	  			<groupId>org.apache.httpcomponents</groupId>
 	  			<artifactId>httpclient</artifactId>
-	  			<version>4.5.3</version>
+	  			<version>4.5.6</version>
 	  		</dependency>
 	  		<dependency>
 	  			<groupId>dom4j</groupId>
@@ -275,5 +275,6 @@
 		<module>pinyougou-content-interface</module>
 		<module>pinyougou-content-service</module>
 		<module>pinyougou-portal-web</module>
+		<module>pinyougou-solr-utils</module>
 	</modules>
 </project>
