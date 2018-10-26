@@ -8,7 +8,7 @@
   <artifactId>pinyougou-search-service</artifactId>
   <packaging>war</packaging>
   
-  <dependencies>
+      <dependencies>
   	<!-- Spring -->
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -87,7 +87,7 @@
 		<artifactId>pinyougou-search-interface</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
-  </dependencies>
+      </dependencies>
   
   <build>  
 	  <plugins>	     
