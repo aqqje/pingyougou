@@ -1,1 +1,1 @@
-[[{"location":"C:\\LearnEnv\\java1.8\\jre1.8","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"]]
+[[{"location":"C:\\LearnEnv\\java1.8\\jre1.8","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"],[{"location":"C:\\LearnEnv\\Maven\\maven-repository\\org\\springframework\\data\\spring-data-redis\\1.8.6.RELEASE\\spring-data-redis-1.8.6.RELEASE.jar","type":"JAR","hints":{}},"org.springframework.data:spring-data-redis:1.8.6"]]

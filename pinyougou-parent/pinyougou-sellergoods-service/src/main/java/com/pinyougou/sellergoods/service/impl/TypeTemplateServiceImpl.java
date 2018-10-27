@@ -103,7 +103,14 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 			List<Map> specList = findSpecList(typeTemplate.getId());
 			//缓存模版列表
 			redisTemplate.boundHashOps("specList").put(typeTemplate.getId(), specList);//根据模板ID查询规格列表
+			
+			//System.out.println("typeTemplate.getId()"+typeTemplate.getId()+","+specList + "================" + brandList);
 		}
+		Long typeId = (Long)redisTemplate.boundHashOps("itemCat").get("手机");
+		List brandList = (List)redisTemplate.boundHashOps("brandList").get(typeId);
+		System.out.println("brandList"+brandList);
+		List specList = (List)redisTemplate.boundHashOps("specList").get(typeId);
+		System.out.println("specList"+specList);
 		System.out.println("更新缓存:商品品牌表与模板");
 	}
 	
