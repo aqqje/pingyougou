@@ -1,14 +1,23 @@
 package com.pinyougou.search.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.GroupOptions;
 import org.springframework.data.solr.core.query.HighlightOptions;
 import org.springframework.data.solr.core.query.HighlightQuery;
+import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleHighlightQuery;
+import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.result.GroupEntry;
+import org.springframework.data.solr.core.query.result.GroupPage;
+import org.springframework.data.solr.core.query.result.GroupResult;
 import org.springframework.data.solr.core.query.result.HighlightEntry;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 
@@ -25,11 +34,15 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 	@Override
 	public Map<String, Object> search(Map searchMap) {
 		Map<String, Object> map=new HashMap<>();
+		//1.根据关键字搜索(高亮显示)
 		map.putAll(searchList(searchMap));
+		//2.根据关键字分级查询搜索商品分类
+		List categoryList = searchCategoryList(searchMap);
+		map.put("categoryList", categoryList);
 		return map;
 	}
 	/**
-	 * 根据关键字搜索
+	 * 根据关键字搜索(高亮显示)
 	 * @param searchMap
 	 * @return
 	 */
@@ -56,4 +69,34 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 		return map;
 
 	}
+	/**
+	 * 根据关键字分级查询搜索商品分类
+	 */
+	private List searchCategoryList(Map searchMap) {
+		List<String> categoryList = new ArrayList<>();
+		
+		Query query = new SimpleQuery("*:*");
+		//搜索关键字/条件
+		Criteria criteria=new Criteria("item_keywords").is(searchMap.get("keywords")); // where ...
+		query.addCriteria(criteria);
+		
+		//分组选项
+		GroupOptions groupOptions = new GroupOptions().addGroupByField("item_category");//添加分组域
+		//设置分级选项
+		query.setGroupOptions(groupOptions);// groud by ...
+		//分组查询
+		GroupPage<TbItem> page = solrTemplate.queryForGroupPage(query, TbItem.class);
+		//获取分组结果集
+		GroupResult<TbItem> groupResult = page.getGroupResult("item_category");
+		//得到分组结果入口页
+		Page<GroupEntry<TbItem>> entries = groupResult.getGroupEntries();
+		//分组入口集合
+		List<GroupEntry<TbItem>> content = entries.getContent();
+		for(GroupEntry<TbItem> entry:content) {
+			//将分组结果添加到商品分类集合中
+			categoryList.add(entry.getGroupValue());
+		}
+		return categoryList;
+		
+	} 
 }
