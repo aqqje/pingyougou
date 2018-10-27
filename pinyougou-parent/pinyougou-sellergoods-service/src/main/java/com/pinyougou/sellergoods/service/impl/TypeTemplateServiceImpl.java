@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -31,6 +32,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 	@Autowired
 	private TbTypeTemplateMapper typeTemplateMapper;
+	
+	@Autowired
+	private RedisTemplate redisTemplate;
 	
 	/**
 	 * 查询全部
@@ -88,7 +92,22 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	}
 	
 	
-		@Override
+	private void saveToRedis() {
+		//查询出所有模版信息
+		List<TbTypeTemplate> typeTemplateList = findAll();
+		for(TbTypeTemplate typeTemplate: typeTemplateList) {
+			List<Map> brandList = JSON.parseArray(typeTemplate.getBrandIds(), Map.class);
+			//缓存品牌列表
+			redisTemplate.boundHashOps("brandList").put(typeTemplate.getId(), brandList);//根据模板ID查询品牌列表
+			
+			List<Map> specList = findSpecList(typeTemplate.getId());
+			//缓存模版列表
+			redisTemplate.boundHashOps("specList").put(typeTemplate.getId(), specList);//根据模板ID查询规格列表
+		}
+		System.out.println("更新缓存:商品品牌表与模板");
+	}
+	
+	@Override
 	public PageResult findPage(TbTypeTemplate typeTemplate, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
@@ -112,6 +131,8 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 		}
 		
 		Page<TbTypeTemplate> page= (Page<TbTypeTemplate>)typeTemplateMapper.selectByExample(example);		
+		//缓存品牌与模板列表信息
+		saveToRedis();
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
