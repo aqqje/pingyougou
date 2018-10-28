@@ -7,7 +7,7 @@ app.controller("searchController",function($scope,searchSerivce){
 		});
 	}
 	
-	$scope.searchMap={'keywords':'','category':'','brand':'','spec':{}} // 搜索对象
+	$scope.searchMap={'keywords':'','brand':'','category':'','spec':{}} // 搜索对象
 	
 	//添加搜索选项
 	$scope.addSearchItem=function(key,keyValue){
@@ -20,7 +20,7 @@ app.controller("searchController",function($scope,searchSerivce){
 	}
 	//移除搜索选项
 	$scope.removeSearchItem=function(key){
-		if(key=='category'||key=='brand'){
+		if(key=='brand'||key=='category'){
 			$scope.searchMap[key]='';
 		}else{
 			delete $scope.searchMap.spec[key];

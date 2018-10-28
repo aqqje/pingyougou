@@ -46,7 +46,6 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 		List<String> categoryList = searchCategoryList(searchMap);
 		map.put("categoryList", categoryList);
 		//3.获取品牌和模板列表
-		System.out.println(categoryList.get(0));
 		if(categoryList.size()>0) {
 			map.putAll(searchBrandAndSpecList(categoryList.get(0)));
 		}
