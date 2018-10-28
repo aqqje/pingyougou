@@ -10,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.FilterQuery;
 import org.springframework.data.solr.core.query.GroupOptions;
 import org.springframework.data.solr.core.query.HighlightOptions;
 import org.springframework.data.solr.core.query.HighlightQuery;
 import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleFilterQuery;
 import org.springframework.data.solr.core.query.SimpleHighlightQuery;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.result.GroupEntry;
@@ -58,15 +60,36 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 	private Map<String,Object> searchList(Map searchMap) {
 		Map<String, Object> map=new HashMap<>();
 		HighlightQuery query = new SimpleHighlightQuery();
-		//设置高亮选项
+		//1.1设置高亮选项
 		HighlightOptions highlightOptions = new HighlightOptions().addField("item_title");//设置高亮域
 		highlightOptions.setSimplePrefix("<em style='color:red'>");//高亮前缀
 		highlightOptions.setSimplePostfix("</em>");//高亮后缀
 		query.setHighlightOptions(highlightOptions);
-		//搜索关键字/条件
+		//1.2搜索关键字/条件
 		Criteria criteria=new Criteria("item_keywords").is(searchMap.get("keywords"));
 		query.addCriteria(criteria);
-		// 高亮
+		//2.1商品分类过滤条件
+		if(!"".equals(searchMap.get("category"))) {
+			Criteria filterCriteria = new Criteria("item_category").is(searchMap.get("category"));
+			FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+			query.addFilterQuery(filterQuery);
+		}
+		//2.2商品品牌过滤条件
+		if(!"".equals(searchMap.get("brand"))) {
+			Criteria filterCriteria = new Criteria("item_brand").is(searchMap.get("brand"));
+			FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+			query.addFilterQuery(filterQuery );
+		}
+		//2.3商品规格过滤条件
+		if(searchMap.get("spec")!=null) {
+			Map<String,String> specMap = (Map)searchMap.get("spec");
+			for(String key:specMap.keySet()) {
+				Criteria filterCriteria = new Criteria("item_spec_"+key).is(specMap.get(key));
+				FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria );
+				query.addFilterQuery(filterQuery );
+			}
+		}
+		//3.1高亮
 		HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query , TbItem.class);
 		for(HighlightEntry<TbItem> entry: page.getHighlighted()) {//循环高亮实体的入口
 			TbItem entity = entry.getEntity();//获取原实体类
