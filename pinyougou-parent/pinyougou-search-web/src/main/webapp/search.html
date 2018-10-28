@@ -150,7 +150,9 @@
 					<li>
 						<a href="#">全部结果</a>
 					</li>					
-					<li class="active">智能手机</li>					
+					<li class="active" click="removeSearchItem('category')" ng-if="searchMap.category!=''">商品分类：{{earchMap.category}}<i class="sui-icon icon-tb-close"></i></li>		
+					<li class="active" click="removeSearchItem('brand')" ng-if="searchMap.brand!=''">品牌：{{earchMap.brand}}<i class="sui-icon icon-tb-close"></i></li>			
+					<li class="active" click="removeSearchItem('searchMap.spec[key]')" ng-if="searchMap.spec!={}" ng-repeat="(key,value) in searchMap.spec">{{key}}:{{value}}<i class="sui-icon icon-tb-close"></i></li>			
 				</ul>
 				<ul class="tags-choose">
 					<li class="tag">全网通<i class="sui-icon icon-tb-close"></i></li>
@@ -166,20 +168,20 @@
 			</div>
 			<!--selector-->
 			<div class="clearfix selector">
-				<div class="type-wrap" ng-if="resultMap.categoryList!=null">
+				<div class="type-wrap" ng-if="resultMap.categoryList!=null&&searchMap.category=''">
 					<div class="fl key">商品分类</div>
 					<div class="fl value">
 						<span ng-repeat="category in resultMap.categoryList">
-							<a href="#">{{category}}</a>
+							<a href="#" ng-click="addSearchItem('category',category)">{{category}}</a>
 						</span>
 					</div>
 					<div class="fl ext"></div>
 				</div>
-				<div class="type-wrap logo">
-					<div class="fl key brand" >品牌</div>
+				<div class="type-wrap logo" ng-if="resultMap.brandList!=null&&searchMap.brand=''">
+					<div class="fl key brand">品牌</div>
 					<div class="value logos">
 						<ul class="logo-list">
-							<li ng-repeat="brand in resultMap.brandList"><a href="#">{{brand.text}}</a></li>
+							<li ng-repeat="brand in resultMap.brandList"><a href="#" ng-click="addSearchItem('brands',brand.text)">{{brand.text}}</a></li>
 						</ul>
 					</div>
 					<div class="ext">
@@ -187,54 +189,16 @@
 						<a href="javascript:void(0);">更多</a>
 					</div>
 				</div>
-				<div class="type-wrap">
-					<div class="fl key">网络制式</div>
+				<div class="type-wrap" ng-if="searchMap.spec[spec.text]==null" ng-repeat="spec in resultMap.specList">
+					<div class="fl key">{{spec.text}}</div>
 					<div class="fl value">
 						<ul class="type-list">
-							<li ng-repeat="spec in resultMap.specList">
-								<a>{{spec.text}}</a>
+							<li ng-repeat="pojo in spec.options">
+								<a href="#" ng-click="addSearchItem(spec.text,pojo.optionName)">{{pojo.optionName}}</a>
 							</li>
 						</ul>
 					</div>
 					<div class="fl ext"></div>
-				</div>
-				<div class="type-wrap">
-					<div class="fl key">显示屏尺寸</div>
-					<div class="fl value">
-						<ul class="type-list">
-							<li>
-								<a>4.0-4.9英寸</a>
-							</li>
-							<li>
-								<a>4.0-4.9英寸</a>
-							</li>
-						</ul>
-					</div>
-					<div class="fl ext"></div>
-				</div>
-				<div class="type-wrap">
-					<div class="fl key">摄像头像素</div>
-					<div class="fl value">
-						<ul class="type-list">
-							<li>
-								<a>1200万以上</a>
-							</li>
-							<li>
-								<a>800-1199万</a>
-							</li>
-							<li>
-								<a>1200-1599万</a>
-							</li>
-							<li>
-								<a>1600万以上</a>
-							</li>
-							<li>
-								<a>无摄像头</a>
-							</li>
-						</ul>
-					</div>
-					<div class="fl ext"></div>
-				</div>
 				<div class="type-wrap">
 					<div class="fl key">价格</div>
 					<div class="fl value">
