@@ -7,11 +7,11 @@ app.controller("searchController",function($scope,searchSerivce){
 		});
 	}
 	
-	$scope.searchMap={'keywords':'','brand':'','category':'','spec':{}} // 搜索对象
+	$scope.searchMap={'keywords':'','brand':'','category':'','spec':{},'price':''} // 搜索对象
 	
 	//添加搜索选项
 	$scope.addSearchItem=function(key,keyValue){
-		if(key=='category'||key=='brand'){
+		if(key=='category'||key=='brand'||key=='price'){
 			$scope.searchMap[key]=keyValue;
 		}else{
 			$scope.searchMap.spec[key]=keyValue;
@@ -20,7 +20,7 @@ app.controller("searchController",function($scope,searchSerivce){
 	}
 	//移除搜索选项
 	$scope.removeSearchItem=function(key){
-		if(key=='brand'||key=='category'){
+		if(key=='brand'||key=='category'||key=='price'){
 			$scope.searchMap[key]='';
 		}else{
 			delete $scope.searchMap.spec[key];
