@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
@@ -106,7 +107,20 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 				query.addFilterQuery(filterQuery);
 			}
 		}
-		//3.1分页查询
+		//3.1价格排序
+		String sortValue = (String)searchMap.get("sort");//ASC DESC
+		String sortField = (String)searchMap.get("sortField");//排序字段
+		if(sortValue!=null&&!sortValue.equals("")) {
+			if(sortValue.equals("ASC")) {//升序
+				Sort sort = new Sort(Sort.Direction.ASC,"item_"+sortField);
+				query.addSort(sort );
+			}
+			if(sortValue.equals("DESC")) {//降序
+				Sort sort = new Sort(Sort.Direction.DESC,"item_"+sortField);
+				query.addSort(sort );
+			}
+		}
+		//4.1分页查询
 		int pageNo = (Integer)searchMap.get("pageNo");//提取页码
 		if(pageNo==0) {
 			pageNo=1;//默认

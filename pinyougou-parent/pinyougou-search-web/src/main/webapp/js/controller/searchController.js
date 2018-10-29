@@ -9,7 +9,7 @@ app.controller("searchController",function($scope,searchSerivce){
 		});
 	}
 	
-	$scope.searchMap={'keywords':'','brand':'','category':'','spec':{},'price':'','pageNo':1,'pageSize':40} // 搜索对象
+	$scope.searchMap={'keywords':'','brand':'','category':'','spec':{},'price':'','pageNo':1,'pageSize':40,'sortField':'','sort':''} // 搜索对象
 	
 	//添加搜索选项
 	$scope.addSearchItem=function(key,keyValue){
@@ -83,5 +83,11 @@ app.controller("searchController",function($scope,searchSerivce){
 		}
 		$scope.searchMap.pageNo=pageNo;
 		$scope.search();
+	}
+	//排序搜索
+	$scope.sortSearch=function(sortField,sort){
+		$scope.searchMap.sort = sort;
+		$scope.searchMap.sortField = sortField;
+		$scope.search();//执行搜索
 	}
 });
