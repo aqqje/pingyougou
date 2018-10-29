@@ -40,6 +40,9 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 	@Override
 	public Map<String, Object> search(Map searchMap) {
 		Map<String, Object> map=new HashMap<>();
+		//0.关键字空格处理
+		String keywords = (String)searchMap.get("keywords");
+		searchMap.put("keywords",keywords.replace(" ", ""));
 		//1.根据关键字搜索(高亮显示)
 		map.putAll(searchList(searchMap));
 		//2.根据关键字分级查询搜索商品分类
@@ -88,6 +91,7 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 				query.addFilterQuery(filterQuery );
 			}
 		}
+		
 		//2.4商品价格过滤条件
 		if(!"".equals(searchMap.get("price"))) {
 			String[] price = ((String)searchMap.get("price")).split("-");
@@ -102,7 +106,18 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 				query.addFilterQuery(filterQuery);
 			}
 		}
-		//3.1高亮
+		//3.1分页查询
+		int pageNo = (Integer)searchMap.get("pageNo");//提取页码
+		if(pageNo==0) {
+			pageNo=1;//默认
+		}
+		int pageSize = (Integer)searchMap.get("pageSize");//提取页实体数量
+		if(pageSize==0) {
+			pageSize=40;//默认
+		}
+		query.setOffset((pageNo-1)*pageSize);//offset第一条记录索引
+		query.setRows(pageSize);
+		//4.1高亮
 		HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query , TbItem.class);
 		for(HighlightEntry<TbItem> entry: page.getHighlighted()) {//循环高亮实体的入口
 			TbItem entity = entry.getEntity();//获取原实体类
@@ -111,6 +126,8 @@ public class ItemSearchServiceImpl implements ItemSearchService{
 			}
 		}
 		map.put("rows", page.getContent());
+		map.put("totalPages", page.getTotalPages());//总页数
+		map.put("total",page.getTotalElements());//总记录数
 		return map;
 
 	}
