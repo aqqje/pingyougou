@@ -1,5 +1,5 @@
 //搜索控制层
-app.controller("searchController",function($scope,searchSerivce){
+app.controller("searchController",function($scope,$location,searchSerivce){
 	//搜索
 	$scope.search=function(){
 		$scope.searchMap.pageNo = parseInt($scope.searchMap.pageNo);
@@ -88,6 +88,20 @@ app.controller("searchController",function($scope,searchSerivce){
 	$scope.sortSearch=function(sortField,sort){
 		$scope.searchMap.sort = sort;
 		$scope.searchMap.sortField = sortField;
+		$scope.search();//执行搜索
+	}
+	//隐藏非关键字品牌
+	$scope.keywordsIsBrand=function(){
+		for(var i=0; i<$scope.resultMap.brandList.length; i++){
+			if($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0){//如果包含返回
+				return true;
+			}
+		}
+		return false;
+	}
+	//接收首页搜索参数并进行搜索
+	$scope.keyLocation=function(){
+		$scope.searchMap.keywords=$location.search()['keywords'];
 		$scope.search();//执行搜索
 	}
 });

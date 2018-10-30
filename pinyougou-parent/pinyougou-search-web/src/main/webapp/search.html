@@ -175,12 +175,12 @@
 					</div>
 					<div class="fl ext"></div>
 				</div>
-				<div class="type-wrap logo" ng-if="resultMap.brandList!=null&&searchMap.brand==''">
+				<div class="type-wrap logo" ng-if="resultMap.brandList!=null && searchMap.brand=='' && keywordsIsBrand()==false">
 					<!-- <div class="fl key brand">品牌</div> -->
 					<div class="fl key brand">品牌</div>
 					<div class="value logos">
-						<ul class="logo-list">
-							<li ng-repeat="brand in resultMap.brandList"><a href="#" ng-click="addSearchItem('brand',brand.text)">{{brand.text}}</a></li>
+						<ul class="tags-choose logo-list">
+							<li class="tag" ng-repeat="brand in resultMap.brandList"><center><a href="#" ng-click="addSearchItem('brand',brand.text)">{{brand.text}}</a></center></li>
 						</ul>
 					</div>
 				</div>
@@ -222,6 +222,7 @@
 					<div class="fl ext">
 					</div>
 				</div>
+				<!--
 				<div class="type-wrap">
 					<div class="fl key">更多筛选项</div>
 					<div class="fl value">
@@ -246,6 +247,7 @@
 					<div class="fl ext">
 					</div>
 				</div>
+				-->
 			</div>
 			<!--details-->
 			<div class="details" ng-if="resultMap.rows!=null">
@@ -255,15 +257,15 @@
 							<li class="active">
 								<a href="#" ng-click="sortSearch('','')">综合</a>
 							</li>
+							<!-- <li>
+								<a href="#">销量(待实现)</a>
+							</li> -->
 							<li>
-								<a href="#">销量</a>
+								<a href="#" ng-click="sortSearch('updatetime','DESC')">新品</a>
 							</li>
-							<li>
-								<a href="#">新品</a>
-							</li>
-							<li>
-								<a href="#">评价</a>
-							</li>
+							<!-- <li>
+								<a href="#">评价(待实现)</a>
+							</li> -->
 							<li>
 								<a href="#" ng-click="sortSearch('price','ASC')">价格↑</a>
 							</li>
@@ -321,7 +323,7 @@
 						</ul>
 					<div><span>共{{resultMap.totalPages}}页&nbsp;</span><span>
       					   到第
-     					 <input type="text" class="page-num" ng-model="searchMap.pageNo">
+     					 <input type="text" class="page-num" style="width: 20px" ng-model="searchMap.pageNo">
      					   页 <button class="page-confirm" ng-click="queryByPage(searchMap.pageNo)">确定</button></span></div>
 					</div>
 				</div>
