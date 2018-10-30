@@ -1,4 +1,5 @@
 package com.pinyougou.sellergoods.service.impl;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.pinyougou.mapper.TbBrandMapper;
 import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
@@ -23,6 +25,7 @@ import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.pojo.TbItemCatExample;
 import com.pinyougou.pojo.TbItemExample;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojogroup.Goods;
@@ -250,13 +253,26 @@ public class GoodsServiceImpl implements GoodsService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
-		@Override
-		public void updateStatus(Long[] ids, String status) {
-			for(Long id: ids) {
-				TbGoods goods = goodsMapper.selectByPrimaryKey(id);
-				goods.setAuditStatus(status);
-				goodsMapper.updateByPrimaryKey(goods);
-			}
+	@Override
+	public void updateStatus(Long[] ids, String status) {
+		for(Long id: ids) {
+			TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+			goods.setAuditStatus(status);
+			goodsMapper.updateByPrimaryKey(goods);
 		}
+	}
 	
+	/**
+	 * 根据SPU id集合查询SKU
+	 * @param goodsId
+	 * @param status
+	 * @return List
+	 */
+	public List findItemByGoodsId(Long[] goodsId, String status) {
+		TbItemExample example = new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdIn(Arrays.asList(goodsId));
+		criteria.andStatusEqualTo(status);
+		return itemMapper.selectByExample(example);
+	}
 }

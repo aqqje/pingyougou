@@ -1,4 +1,5 @@
 package com.pinyougou.manager.controller;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojogroup.Goods;
+import com.pinyougou.search.service.ItemSearchService;
 import com.pinyougou.sellergoods.service.GoodsService;
 
 import entity.PageResult;
@@ -24,6 +26,8 @@ public class GoodsController {
 	@Reference
 	private GoodsService goodsService;
 	
+	@Reference(timeout=100000)
+	private ItemSearchService itemSearchService;
 	/**
 	 * 返回全部列表
 	 * @return
@@ -94,6 +98,8 @@ public class GoodsController {
 	public Result delete(Long [] ids){
 		try {
 			goodsService.delete(ids);
+			//从solr同步删除
+			itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,6 +123,14 @@ public class GoodsController {
 	public Result updateStatus(Long[] ids, String status) {
 		try {
 			goodsService.updateStatus(ids, status);
+			if("1".equals(status)) {
+				List items = goodsService.findItemByGoodsId(ids, status);
+				if(items.size()>0) {
+					itemSearchService.updateSolrData(items);
+				}else {
+					System.out.println("没有明细的数据！");
+				}
+			}
 			return new Result(true, "操作成功！");
 		} catch (Exception e) {
 			e.printStackTrace();

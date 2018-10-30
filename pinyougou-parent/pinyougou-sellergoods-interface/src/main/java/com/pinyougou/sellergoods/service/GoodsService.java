@@ -65,4 +65,12 @@ public interface GoodsService {
 	 * @param status
 	 */
 	public void updateStatus(Long[] ids,String status);
+	
+	/**
+	 * 根据SPU id集合查询SKU
+	 * @param goodsId
+	 * @param status
+	 * @return
+	 */
+	public List findItemByGoodsId(Long[] goodsId, String status);
 }

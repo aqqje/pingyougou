@@ -92,12 +92,12 @@ app.controller("searchController",function($scope,$location,searchSerivce){
 	}
 	//隐藏非关键字品牌
 	$scope.keywordsIsBrand=function(){
-		for(var i=0; i<$scope.resultMap.brandList.size(); i++){
-			if($scope.searchMap.keywords.indexOf(scope.resultMap.brandList[i].text)>=0){//如果包含返回
+		for(var i=0; i<$scope.resultMap.brandList.length; i++){
+			if($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0){//如果包含返回
 				return true;
 			}
-			return false;
 		}
+		return false;
 	}
 	//接收首页搜索参数并进行搜索
 	$scope.keyLocation=function(){
