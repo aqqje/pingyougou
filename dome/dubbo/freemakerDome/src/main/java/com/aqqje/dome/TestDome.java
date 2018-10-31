@@ -3,7 +3,10 @@ package com.aqqje.dome;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import freemarker.template.Configuration;
@@ -25,6 +28,25 @@ public class TestDome {
 		//6.添加数据
 		dataModel.put("name", "liuli");
 		dataModel.put("message", "欢迎来到 FreeMaker !");
+		dataModel.put("success", false);
+		
+		List<Map> goodList = new ArrayList<>();
+		Map<String,Object> good1 = new HashMap<>();
+		Map<String,Object> good2 = new HashMap<>();
+		Map<String,Object> good3 = new HashMap<>();
+		good1.put("name", "苹果");
+		good1.put("price", "200");
+		good2.put("name", "桔子");
+		good2.put("price", "100");
+		good3.put("name", "香蕉");
+		good3.put("price", "500");
+		goodList.add(good1);
+		goodList.add(good2);
+		goodList.add(good3);
+		
+		dataModel.put("goodList", goodList);
+		dataModel.put("today", new Date());
+		dataModel.put("point", 12545821);
 		Writer out = new FileWriter("E:\\github\\pingyougou\\dome\\dubbo\\freemakerDome\\src\\main\\resources\\page\\yjgm.html");
 		//7.生成文件
 		template.process(dataModel, out);
