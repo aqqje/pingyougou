@@ -2,11 +2,11 @@ package com.pinyougou.manager.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.search.service.ItemSearchService;
@@ -28,6 +28,9 @@ public class GoodsController {
 	
 	@Reference(timeout=100000)
 	private ItemSearchService itemSearchService;
+	
+	@Reference(timeout=40000)
+	private ItemPageService itemPageService;
 	/**
 	 * 返回全部列表
 	 * @return
@@ -138,5 +141,12 @@ public class GoodsController {
 		}
 		
 	}
-	
+	/**
+	 * 根据ID生成静态详情页
+	 * @param id
+	 */
+	@RequestMapping("/genItemHtml")
+	public void genItemHtml(Long id) {
+		itemPageService.genItemPage(id);
+	}
 }
