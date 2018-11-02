@@ -133,6 +133,10 @@ public class GoodsController {
 				}else {
 					System.out.println("没有明细的数据！");
 				}
+				//静态页面生成
+				for(Long id: ids) {
+					itemPageService.genItemPage(id);
+				}
 			}
 			return new Result(true, "操作成功！");
 		} catch (Exception e) {
