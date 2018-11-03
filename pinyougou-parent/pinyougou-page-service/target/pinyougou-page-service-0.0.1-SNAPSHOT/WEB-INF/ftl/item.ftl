@@ -24,8 +24,8 @@
 			<#list itemList as item>
 			{
 			'id':${item.id?c},
-			'title':'${item.title}',
-			'price': ${item.p-rice?c},
+			'title':'${item.title!''}',
+			'price': ${item.price?c},
 			'spec': ${item.spec}
 			},
 			</#list>
@@ -94,7 +94,7 @@
 				</div>
 				<div class="fr itemInfo-wrap">
 					<div class="sku-name">
-						<h4>{{suk.title}}</h4>
+						<h4>{{sku.title}}</h4>
 					</div>
 					<div class="news"><span>${goods.caption}</span></div>
 					<div class="summary">
@@ -171,7 +171,7 @@
 							<div class="fl">
 								<ul class="btn-choose unstyled">
 									<li>
-										<a href="cart.html" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
+										<a href="#" ng-click="addToCat()" target="_blank" class="sui-btn  btn-danger addshopcar">加入购物车</a>
 									</li>
 								</ul>
 							</div>

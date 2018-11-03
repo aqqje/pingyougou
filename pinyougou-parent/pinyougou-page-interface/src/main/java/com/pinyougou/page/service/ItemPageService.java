@@ -8,4 +8,11 @@ public interface ItemPageService {
 	 * @return
 	 */
 	public boolean genItemPage(Long id);
+
+	/**
+	 * 根据id删除静态页面
+	 * @param ids
+	 * @return
+	 */
+	public boolean deleteById(Long id);
 }

@@ -10,9 +10,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
 import com.pinyougou.mapper.TbItemCatMapper;
@@ -99,6 +99,17 @@ public class ItemPageServiceImpl implements ItemPageService {
 			template.process(dataModel, out); 
 			//关闭输出流
 			out.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteById(Long id) {
+		try {
+			new File(itemDir + id + ".html").delete();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
