@@ -16,9 +16,11 @@ public class QueueMQcontroller {
 	
 	@RequestMapping("/send")
 	public void send() {
-		Map map=new HashMap<>();
-		map.put("mobile", "13900001111");
-		map.put("content", "恭喜获得10元代金券");		
-		jmsMessagingTemplate.convertAndSend("aqqje_map",map);
+		Map<String,String> map=new HashMap<>();
+		map.put("phoneNumbers", "13548522461");
+		map.put("signName", "品优购");		
+		map.put("templateCode", "SMS_150182480");		
+		map.put("templateParam", "{\"name\":\"欧明\"}");		
+		jmsMessagingTemplate.convertAndSend("sms",map);
 	}
 }
